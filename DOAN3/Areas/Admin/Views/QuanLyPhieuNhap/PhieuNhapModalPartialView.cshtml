@@ -1,0 +1,43 @@
+﻿<div id="modalADDUPDATE" class="modalthem modal">
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+    <h3>ADD/UPDATE</h3>
+    <div class="modal-body">
+        <form action="/action_page.php">
+            <div class="form-group">
+                <label for="txtmanpn">Mã hóa đơn nhập:</label>
+                <input type="text" class="form-control" id="txtmanpn">
+                <input type="hidden" class="form-control" id="hidID" value="0">
+            </div>
+            <div class="form-group">
+                <label for="txtMaNCC">Mã nhà cung cấp:</label>
+                @Html.DropDownList("MaNCC", null, new { @class = "form-control col-md-7", @id = "txtMaNCC" })
+            </div>
+            <div class="form-group">
+                <label for="txtmasp">Mã sản phẩm:</label>
+                @Html.DropDownList("MaSP", null, new { @class = "form-control col-md-7", @id = "txtmasp" })
+            </div>
+            <div class="form-group">
+                <label for="txtngaycapnhat">Ngày cập nhật:</label>
+                <input type="text" class="form-control" id="txtngaycapnhat">
+            </div>
+            <div class="form-group">
+                <label for="txtsl">Số lượng nhập :</label>
+                <input type="text" class="form-control" id="txtsl">
+            </div>
+            
+            <div class="form-group">
+                <label for="txtdg">Đơn giá :</label>
+                <input type="text" class="form-control" id="txtdg">
+            </div>
+            <div class="form-group">
+                <label for="txttt">Thành tiền :</label>
+                <input type="text" class="form-control" id="txttt">
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" id="btnUpdate">Update</button>
+        <button type="submit" class="btn btn-primary" id="btnSave">Save</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    </div>
+</div>

@@ -1,0 +1,33 @@
+﻿<div id="modalADDUPDATE" class="modalthem modal">
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+    <h3>ADD/UPDATE</h3>
+    <div class="modal-body">
+        <form action="/action_page.php">
+            <div class="form-group">
+                <label for="txtmancc">Mã nhà cung cấp:</label>
+                <input type="text" class="form-control" id="txtmancc">
+                <input type="hidden" class="form-control" id="hidID" value="0">
+            </div>
+            <div class="form-group">
+                <label for="txttenncc">Tên nhà cung cấp:</label>
+                <input type="text" class="form-control" id="txttenncc">
+            </div>
+            <div class="form-group">
+                <label for="txtdiachi">Địa chỉ:</label>
+                <input type="text" class="form-control" id="txtdiachi">
+            </div>
+            <div class="form-group">
+                <label for="txtemail">Email:</label>
+                <input type="email" class="form-control" id="txtemail">
+            </div>
+            <div class="form-group">
+                <label for="txtsdt">Số điện thoại:</label>
+                <input type="text" class="form-control" id="txtsdt">
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" id="btnSave">Save</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    </div>
+</div>

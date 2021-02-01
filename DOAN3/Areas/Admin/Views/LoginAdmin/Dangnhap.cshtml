@@ -1,0 +1,72 @@
+﻿@{
+    Layout = null;
+}
+@*@using admin.Models.Entities
+    @model TaiKhoan*@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Đăng nhập</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    @Styles.Render("~/Content/login")
+    <script src="~/Content/js/jquery.min.js"></script>
+    <script src="~/Content/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="logmain">
+        <div class="sublog">
+            <!-- title -->
+            <div class="toplog">
+                <h2><a href=""><span>I</span>nspire</a></h2>
+            </div>
+            <!-- end title -->
+            <div class="mainlog">
+                <div class="toptitle">
+                    <p class="title">Đăng nhập<span class="icon-hand-down"></span></p>
+                </div>
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, null, new { @class = "alert alert-danger" })
+                    <div class="input">
+                        <input type="text" id="txtusername" placeholder="User name" name="UserName" required="" oninput="this.setCustomValidity('')" oninvalid="this.setCustomValidity('Please enter a user name!')" />
+                        <span class="icon-user"></span>
+                    </div>
+                    <div class="input">
+                        <input type="password" placeholder="Mật khẩu" name="MatKhau" id="password1" />
+                        <span class="icon-unlock-alt"></span>
+                    </div>
+                    @*<label>
+                            @Html.CheckBoxFor(model => model.Remember) Remmember Me
+                        </label>*@
+                    <div class="inputf">
+                    </div>
+                    <button type="submit" class="btn-submit" value="submit">
+                        <span class="icon-signout"></span>
+                    </button>
+                }
+                <div class="register">
+                    <ul class="list-login">
+                        <li>
+                            <a href="/Admin/LoginAdmin/QuenMatKhau" class="text-right">Quên mật khẩu</a>
+                        </li>
+                        <li>
+                            <a href="/Home/FAQS" class="text-right">Cần trợ giúp</a>
+                        </li>
+                        <li class="clearfix"></li>
+                    </ul>
+                    <ul class="list-login-bottom">
+                        <li class="">
+                            <a href="/LoginAdmin/TaotaiKhoan" class="bottom">Đăng ký</a>
+                        </li>
+
+                        <li class="clearfix"></li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,90 @@
+﻿<div id="modalADDUPDATE" class="modalthem modal">
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+    <h3>ADD/UPDATE</h3>
+    <div class="modal-body">
+        <form>
+            <div class="form-group">
+                <label for="txtmanv">Mã nhân viên:</label>
+                <input type="text" class="form-control" id="txtmanv">
+                <input type="hidden" class="form-control" id="hidID" value="0">
+            </div>
+            <div class="form-group">
+                <label for="txttennv">Tên nhân viên:</label>
+                <input type="text" class="form-control" id="txttennv">
+            </div>
+            <div class="form-group">
+                <label for="txtavarta">Hình ảnh</label>
+                <div id="txtavarta">
+                    <input type="text" name="HinhAnh" id="HinhAnh1" class="form-control" style="display:inline-block;" />
+                    <input type="file" name="fileUpload" id="fileUpload" style="display:none;" />
+                    <input type="button" id="btnUpload" value="..." style="background-color:green;width:35px;height:35px;border-radius:7px;" />
+                    <img id="imgUpload" width="300" style="margin-top:1rem;margin-bottom:1rem;" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="txtchucvu">Chức vụ:</label>
+                <input type="text" class="form-control" id="txtchucvu">
+            </div>
+            <div class="form-group">
+                <label for="txtquequan">Quê quán:</label>
+                <input type="text" class="form-control" id="txtquequan">
+            </div>
+            <div class="form-group">
+                <label for="txtemail">Email:</label>
+                <input type="email" class="form-control" id="txtemail">
+            </div>
+            <div class="form-group">
+                <label for="txtsdt">Số điện thoại:</label>
+                <input type="text" class="form-control" id="txtsdt">
+            </div>
+            <div class="form-group">
+                <label for="txttaikhoan">Tài khoản:</label>
+                @Html.DropDownList("UserName", null,"NULL", new { @class = "form-control col-md-7", @id = "txttaikhoan" })
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" id="btnSave">Save</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    </div>
+</div>
+<!--upload hinh anh su dung ajax jquery-->
+<script>
+   $(function () {
+      //Dang ky su kien click cua nut btnUpload
+      $('#btnUpload').click(function () {
+          $('#fileUpload').trigger('click');
+      });
+      //bat su kien change data tren fileUpload
+      $('#fileUpload').change(function () {
+      //kiem tra trinh duyet co ho tro formdata object khong?
+         if(window.FormData!==undefined)
+                {
+                    //lay du lieu tren fileUpload
+                    var fileUpload = $('#fileUpload').get(0);
+                    var files = fileUpload.files;
+                    //tao doi tuong formdata
+                    var formData = new FormData();
+                    //dua du lieu vao form
+                    formData.append('file', files[0]);
+                    //post du lieu len server
+                    $.ajax(
+                        {
+                            type: 'POST',
+                            url: '/HomeAdmin/ProcessUpload',
+                            contentType: false,//khong co header
+                            processData: false,//Khong xu ly du lieu
+                            data: formData,
+                            success: function (urlImage) {
+                                $('#HinhAnh1').val(urlImage);
+                                $('#imgUpload').attr({ 'src': '/Content/products-logo/'+ urlImage });
+                            },
+                            erro: function (err) {
+                                alert('co loi xu ly:' + err.statusText);
+                            }
+                        });
+                }
+
+            })
+        });
+</script>

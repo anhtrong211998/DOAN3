@@ -1,0 +1,182 @@
+﻿@using DOAN3.Models.Entities;
+@using DOAN3.Bussiness;
+@{ 
+    QuanLyLoaiSanPhamBus db = new QuanLyLoaiSanPhamBus();
+    var ds = db.LayDsLoaiSanPham();
+    var ssp = ds.Count<LoaiSanPham>();
+    }
+<nav>
+    <div class="container">
+        <div class="nav-inner">
+
+            <!-- mobile-menu -->
+            <div class="hidden-desktop" id="mobile-menu">
+                <ul class="navmenu">
+                    <li>
+                        <div class="menutop">
+                            <div class="toggle"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span></div>
+                            <h2>Menu</h2>
+                        </div>
+                        <ul style="display:none;" class="submenu">
+                            <li>
+                                <ul class="topnav">
+                                    <li class="level0 nav-6 level-top first parent">
+                                        <a class="level-top" href="@Url.Action("Index","Home")"> <span>Trang chủ</span> </a>
+                                    </li>
+                                    <li class="level0 nav-6 level-top">
+                                        <a class="level-top" href="@Url.Action("About","Home")"> <span>Giới thiệu</span> </a>
+                                    </li>
+                                    <li class="level0 nav-7 level-top parent"> <a class="level-top" href="#"> <span>Danh mục</span> </a> </li>
+                                    <li class="level0 nav-8 level-top parent"> <a class="level-top" href="@Url.Action("FAQS","Home")"> <span>Faqs</span> </a> </li>
+                                    <li class="level0 parent drop-menu">
+                                        <a href="#"><span>Blog</span> </a>
+                                        <ul class="level1">
+                                            <li class="level1 first"><a href="@Url.Action("BlogView","Home")"><span>Table View</span></a></li>
+                                            <li class="level1 nav-10-2"> <a href="@Url.Action("BlogPost","Home")"> <span>Single Post</span> </a> </li>
+                                        </ul>
+                                    </li>
+                                    <li class="level0 nav-9 level-top last parent "> <a class="level-top" href="@Url.Action("Contact","Home")"> <span>Liên hệ</span> </a> </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <!--navmenu-->
+            </div>
+            <!--End mobile-menu -->
+            <a class="logo-small" title="Magento Commerce" href="@Url.Action("Index","Home")"><img alt="Magento Commerce" src="~/Content/images/logo-small.png"></a>
+            <ul id="nav" class="hidden-xs">
+                <li class="level0 parent drop-menu">
+                    <a href="@Url.Action("Index","Home")" class="active"><span>Trang chủ</span> </a>
+                </li>
+                <li class="level0 parent drop-menu">
+                    <a href="@Url.Action("About","Home")"><span>Giới thiệu</span> </a>
+                </li>
+                <li class="level0 nav-5 level-top first">
+                    <a class="level-top" href="#"> <span>Danh mục</span> </a>
+                    <div style="display:none;" class="level0-wrapper dropdown-6col">
+                        <div class="level0-wrapper2">
+                            <div class="nav-block nav-block-center grid12-8 itemgrid itemgrid-4col">
+                                <!--mega menu-->
+                                <ul class="level3">
+                                    @for (var i = 0; i < ssp; i=i+4)
+                                    {                       
+                                        <li class="level1 nav-6-1 parent item">                                           
+                                            <a href="grid.html"><span>Mobiles Accesories</span></a>
+                                            <ul class="level1">
+                                                @for (var j = 1; j <= 4; j++)
+                                                {
+                                                    var sp = ds.ElementAtOrDefault<LoaiSanPham>(i + j - 1);
+                                                    if (j + i > ssp)
+                                                    { break; }
+                                                    <li class="level2 nav-6-1-1"> 
+                                                        <a href="@Url.Action("SanphamTheoloai","XemSanpham",new { ma=sp.MaLoaiSP})">
+                                                            <span>@sp.TenLoai</span>
+                                                        </a> 
+                                                    </li>
+                                                }
+                                            </ul>
+                                        </li>
+                                    }
+                                </ul>
+                                <!--level0-->
+                            </div>
+                            <!--nav-block nav-block-center-->
+                            <div class="nav-block nav-block-right std grid12-4">
+                                <p><a href="#"><img class="fade-on-hover" src="~/Content/images/nav-img1.jpg" alt="nav img"></a></p>
+                                <h3 class="heading">ComponentSmart</h3>
+                                <p>Sự lựa chọn thông minh!.</p>
+                                <!--  <p><a class="btn-button-st" title="Shop collection now" href="#">Shop collection now</a></p>  -->
+                            </div>
+                            <!--nav-block nav-block-right std grid12-4-->
+                        </div>
+                    </div>
+                </li>
+                <li class="level0 nav-5 level-top parent">
+                    <a href="@Url.Action("FAQS","Home")"><span>Faqs</span> </a>
+                </li>
+                <li class="level0 parent drop-menu">
+                    <a href="blog.html"><span>Blog</span> </a>
+                    <ul style="display: none;" class="level1">
+                        <li class="level1 first"><a href="@Url.Action("BlogView","Home")"><span>Table View</span></a> </li>
+                        <li class="level1 parent"><a href="@Url.Action("BlogPost","Home")"><span>Single Post</span></a> </li>
+                    </ul>
+                </li>
+                <li class="level0 nav-5 level-top parent">
+                    <a class="level-top" href="@Url.Action("Contact","Home")"><span>Liên hệ</span></a>
+                </li>
+                <!--Cart-->
+                <li class="level0 nav-5 level-top parent nav-cart">
+                    @{
+                        List<itemGioHang> gh = (List<itemGioHang>)Session["giohang"];
+                        int thanhtien = 0;
+                        <div class="top-cart-contain">
+                            <div class="mini-cart">
+                                @if (gh == null)
+                                {
+                                    <div class="basket dropdown-toggle">
+                                        <a href="/Giohang/Xemgiohang">
+                                            <i class="icon-cart"></i>
+                                            <div class="cart-box">
+                                                <span class="title">My Cart</span>
+                                                <span id="cart-total">0</span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="top-cart-content arrow_box">
+                                        <div class="block-subtitle">Mục đã thêm gần đây:</div>
+                                        <ul id="cart-sidebar" class="mini-products-list">
+
+                                        </ul>
+                                        <div class="top-subtotal">Tổng tiền: <span class="price" id="totalprice">0 VNĐ</span></div>
+                                        <div class="actions">
+                                            <button class="btn-checkout" type="button"><a href="/Giohang/Xemgiohang"><span>Xem Giỏ Hàng</span></a></button>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="basket dropdown-toggle">
+                                        <a href="/Giohang/Xemgiohang">
+                                            <i class="icon-cart"></i>
+                                            <div class="cart-box">
+                                                <span class="title">My Cart</span>
+                                                <span id="cart-total">@gh.Count</span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="top-cart-content arrow_box">
+                                        <div class="block-subtitle">Mục đã thêm gần đây</div>
+                                        <ul id="cart-sidebar" class="mini-products-list">
+                                            @foreach (var item in gh)
+                                                {
+                                                    thanhtien += item.SoLuong * item.DonGia;
+                                                <li class="item even" id="xoa_@item.MaSP">
+                                                    <a class="product-image" href="/XemSanpham/XemSanphamChitiet?ma=@item.MaSP" title="Downloadable Product "><img alt="Sample Product" src="~/Content/products-images/@item.HinhAnh" width="50" style="height: 50px;margin-top: -13px;"></a>
+                                                    <div class="detail-item">
+                                                        <div class="product-details">
+                                                            <span title="Remove This Item" data-id="@item.MaSP" class="icon-remove xoagiohang" onclick="XoaGioHang('@item.MaSP')">&nbsp;</span>
+                                                            <p class="product-name"><a href="/XemSanpham/XemSanphamChitiet?ma=@item.MaSP" title="Downloadable Product">@item.TenSP.Substring(0,20)</a></p>
+                                                        </div>
+                                                        <div class="product-details-bottom"><span class="price">@item.DonGia</span></div>
+                                                    </div>
+                                                </li>
+                                            }                                            
+                                        </ul>
+                                        <div class="top-subtotal">Tổng tiền: <span class="price">@thanhtien</span></div>
+                                        <div class="actions">
+                                            <button class="btn-checkout" type="button"><a href="/Giohang/Xemgiohang"><span>Xem Giỏ Hàng</span></a></button>
+                                        </div>
+                                    </div>
+                                }                                
+                            </div>
+                        </div>
+                    }
+                    
+                </li>
+                <!--End Cart-->
+            </ul>
+        </div>
+    </div>
+</nav>
+

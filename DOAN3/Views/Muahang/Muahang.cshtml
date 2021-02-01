@@ -1,0 +1,187 @@
+﻿@using DOAN3.Models.Entities;
+@model IEnumerable<itemGioHang>
+@{
+    ViewBag.Title = "Mua hàng";
+    Layout = "~/Views/Shared/Layout2.cshtml";
+}
+<div class="main-container col2-right-layout">
+    <div class="main container">
+        <div class="row">
+            <section class="col-main col-sm-9 wow">
+                <div class="page-title">
+                    <h1>Thông tin đặt hàng</h1>
+                </div>
+                <ol class="one-page-checkout" id="checkoutSteps">
+                    <li id="opc-billing" class="section allow active">
+                        <div class="step-title" data-toggle="collapse" data-parent="#checkoutSteps" href="#checkout-step-payment">
+                            <span class="number">1</span>
+                            <h3>Thông tin đơn hàng</h3>
+                            <!--<a href="#">Edit</a> -->
+                        </div>
+                        <div id="checkout-step-payment" class="cart panel-collapse collapse in">
+                            <form method="post" action="#updatePost/">
+                                <input type="hidden" value="Vwww7itR3zQFe86m" name="form_key">
+                                <fieldset>
+                                    <table class="data-table cart-table" id="shopping-cart-table">
+                                        <colgroup>
+                                            <col width="1">
+                                            <col>
+                                            <col width="1">
+                                            <col width="1">
+                                            <col width="1">
+                                            <col width="1">
+                                            <col width="1">
+                                        </colgroup>
+                                        <thead>
+                                            <tr class="first last">
+                                                <th rowspan="1">&nbsp;</th>
+                                                <th rowspan="1"><span class="nobr">Tên sản phẩm</span></th>
+                                                <th rowspan="1"></th>
+                                                <th rowspan="1" class="a-center">Giá</th>
+                                                <th class="a-center" rowspan="1">Số lượng</th>
+                                                <th rowspan="1" class="a-center">Tổng</th>
+                                                <th class="a-center" rowspan="1">&nbsp;</th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr class="first last">
+                                                <td class="a-right last" colspan="50">
+                                                    <div class="col-sm-4"></div>
+                                                    <div class="col-sm-4">
+                                                        <div class="discount">
+                                                            <form method="post" action="" id="discount-coupon-form">
+                                                                <input type="text" value="" name="coupon_code" id="coupon_code" class="input-text fullwidth" placeholder="Mã giảm giá(nếu có)">
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                    <div class="totals col-sm-4">
+                                                        <table class="table shopping-cart-table-total" id="shopping-cart-totals-table">
+                                                            <colgroup>
+                                                                <col>
+                                                                <col width="1">
+                                                            </colgroup>
+                                                            <tfoot>
+                                                                <tr>
+                                                                    <td colspan="1" class="a-left" style=""><strong>Thành tiền</strong></td>
+                                                                    <td class="a-right" style=""><strong><span class="price">@ViewBag.tongtien</span></strong></td>
+                                                                </tr>
+
+                                                            </tfoot>
+                                                        </table>
+                                                        
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tfoot>
+                                        <tbody>
+                                            @foreach (var item in Model)
+                                            {
+                                                int thanhtien = item.SoLuong * item.DonGia;
+                                                <tr class="first odd" id="xoa_@item.MaSP">
+                                                    <td class="image">
+                                                        <a class="product-image" title="Sample Product" href="#/women-s-crepe-printed-black/">
+                                                            <img width="75" alt="Sample Product" src="~/Content/products-images/@item.HinhAnh">
+                                                        </a>
+                                                    </td>
+                                                    <td>
+                                                        <h2 class="product-name">
+                                                            <a href="#/women-s-crepe-printed-black/">@item.TenSP.Substring(0, 20)</a>
+                                                        </h2>
+                                                    </td>
+                                                    <td class="a-center">
+                                                        <a title="Edit item parameters" class="edit-bnt" href="#configure/id/15945/"></a>
+                                                    </td>
+                                                    <td class="a-right">
+                                                        <span class="cart-price">
+                                                            <span class="price">@item.DonGia.ToString("#,##")</span>
+                                                        </span>
+                                                    </td>
+                                                    <td class="a-center movewishlist">
+                                                        <input maxlength="12" class="input-text qty" title="Qty" size="4" value="@item.SoLuong" name="cart[15946][qty]" type="number" id="soluong_@item.MaSP" onchange="SoLuongChange('@item.MaSP','@item.DonGia')">
+                                                    </td>
+                                                    <td class="a-right movewishlist">
+                                                        <span class="cart-price">
+                                                            <span class="price" id="thanhtien_@item.MaSP">@thanhtien</span>
+                                                        </span>
+                                                    </td>
+                                                    <td class="a-center last">
+                                                        <a class="button remove-item" title="Remove item" href="#" onclick="XoaGioHang('@item.MaSP')">
+                                                            <span>
+                                                                <span>Remove item</span>
+                                                            </span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            }
+
+                                        </tbody>
+                                    </table>
+                                </fieldset>
+                            </form>
+                            <div style="clear: both;"></div>
+                        </div>
+                    </li>
+                    <li id="opc-shipping_method" class="section ">
+                        <div class="step-title collapsed" data-toggle="collapse" data-parent="#checkoutSteps" href="#checkout-step-shipping_method">
+                            <span class="number">2</span>
+                            <h3 class="one_page_heading">Phương thức thanh toán</h3>
+                            <!--<a href="#">Edit</a>-->
+                        </div>
+                        <div id="checkout-step-shipping_method" class="step a-item panel-collapse collapse">
+                            <form id="co-shipping-method-form" action="#">
+                                <fieldset>
+                                    <div id="checkout-shipping-method-load">
+                                        <dl class="shipping-methods">
+                                            <dd>
+                                                <ul>
+                                                    <li>
+                                                        <input type="checkbox" name="shipping_method" value="flatrate_flatrate" id="s_method_flatrate_flatrate" class="radio">
+                                                        <label for="s_method_flatrate_flatrate">COD(Thanh toán tại nhà) </label>
+                                                    </li>
+                                                </ul>
+                                            </dd>
+                                        </dl>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </li>
+                    <li id="opc-payment" class="section ">
+                        <div class="step-title collapsed" data-toggle="collapse" data-parent="#checkoutSteps" href="#checkout-step-billing">
+                            <span class="number">3</span>
+                            <h3 class="one_page_heading">Thông tin khách hàng</h3>
+                            <!--<a href="#">Edit</a>-->
+                        </div>
+                        <div id="checkout-step-billing" class="step a-item panel-collapse collapse " style="">
+                            @using (Html.BeginForm("ThanhToan", "Muahang"))
+                            {
+                                <p>Vui lòng điền thông tin của bạn.</p>
+                                <ul class="form-list">
+                                    <li>
+                                        <label class="required" for="country">Họ và Tên</label>
+                                        <input type="text" class="input-text required-entry" title="State/Province" value="" name="hoten" id="inputname">
+                                    </li>
+                                    <li>
+                                        <label for="region_id">Email</label>
+                                        <input type="text" class="input-text required-entry" title="State/Province" value="" name="email" id="inputemail" placeholder="Không bắt buộc">
+                                    </li>
+                                    <li>
+                                        <label for="region_id">Số điện thoại</label>
+                                        <input type="text" class="input-text required-entry" title="State/Province" value="" name="sodienthoai" id="inputphone">
+                                    </li>
+                                    <li>
+                                        <label for="region_id">Địa chỉ</label>
+                                        <textarea class="input-text required-entry" title="State/Province" value="" name="diachi" id="inputaddress"></textarea>
+                                    </li>
+                                </ul>
+                                <!--buttons-set11-->
+                                <button class="button btn-checkout" title="Proceed to Checkout" type="submit" style="float: left;"><span>Đặt hàng</span></button>
+                            }
+                        </div>
+                    </li>
+                </ol>
+            </section>
+        </div>
+    </div>
+</div>
+

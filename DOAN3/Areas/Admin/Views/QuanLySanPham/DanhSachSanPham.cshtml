@@ -1,0 +1,146 @@
+﻿
+@{
+    ViewBag.Title = "DanhSachSanPham";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<link href="~/Areas/Admin/Admincss/jquery-ui.css" rel="stylesheet" />
+<script src="~/Content/js/jquery-ui.js"></script>
+<script>
+        $(function () {
+            $('#txtngaycapnhat').datepicker()
+        });
+</script>
+<script src="~/Scripts/AjaxJson/QuanLySanPhamajax.js"></script>
+<section id="main-content">
+    <section class="wrapper">
+        <div class="card_layer">
+            <h5>Danh sách sản phẩm</h5>
+            <div class="row">
+
+                <div class="col-md-12">
+                    <button id="btnAddNew" class="btn btn-success pull-right">Thêm</button>
+                </div>
+            </div>
+            <div class="row" id="renderhere">
+               
+            </div>
+        </div>
+    </section>
+</section>
+<div id="modalADDUPDATE" class="modalthem modal">
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+    <h3>ADD/UPDATE</h3>
+    <div class="modal-body">
+        <form>
+            <div class="form-group">
+                <label for="txtmasp">Mã sản phẩm:</label>
+                <input type="text" class="form-control" id="txtmasp">
+                <input type="hidden" class="form-control" id="hidID" value="0">
+            </div>
+            <div class="form-group">
+                <label for="txttensp">Tên sản phẩm:</label>
+                <input type="text" class="form-control" id="txttensp">
+            </div>
+            <div class="form-group">
+                <label for="txtmota">Mô tả:</label>
+                <input type="text" class="form-control" id="txtmota">
+            </div>
+            <div class="form-group">
+                <label for="txtdongia">Đơn giá:</label>
+                <input type="text" class="form-control" id="txtdongia">
+            </div>      
+            <div class="form-group">
+                <label for="txtgiamgia">Giảm giá:</label>
+                <input type="text" class="form-control" id="txtgiamgia">
+            </div>
+            <div class="form-group">
+                <label for="txtavarta">Hình ảnh</label>
+                <div id="txtavarta">
+                    <input type="text" name="HinhAnh" id="HinhAnh1" class="form-control" style="display:inline-block;" />
+                    <input type="file" name="fileUpload" id="fileUpload" style="display:none;" />
+                    <input type="button" id="btnUpload" value="..." style="background-color:green;width:35px;height:35px;border-radius:7px;" />
+                    <img id="imgUpload" width="300" style="margin-top:1rem;margin-bottom:1rem;" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="txtsoluong">Số lượng tồn:</label>
+                <input type="text" class="form-control" id="txtsoluong">
+            </div>
+            <div class="form-group">
+                <label for="txtngaycapnhat">Ngày cập nhật:</label>
+                <input type="text" class="form-control" id="txtngaycapnhat">
+            </div>
+            <div class="form-group">
+                <label for="txtMaNCC">Nhà cung cấp:</label>
+                @*<input type="text" class="form-control" id="txtquequan">*@
+                @Html.DropDownList("MaNCC", null, new { @class = "form-control col-md-7", @id = "txtMaNCC" })
+            </div>
+            <div class="form-group">
+                <label for="txtMaNSX">Nhà sản xuât:</label>
+                @*<input type="email" class="form-control" id="txtemail">*@
+                @Html.DropDownList("MaNSX", null, new { @class = "form-control col-md-7", @id = "txtMaNSX" })
+            </div>
+            <div class="form-group">
+                <label for="txtMaLoaiSP">Mã loại sản phẩm:</label>
+                @*<input type="text" class="form-control" id="txtsdt">*@
+                @Html.DropDownList("MaLoaiSP", null, new { @class = "form-control col-md-7", @id = "txtMaLoaiSP" })
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" id="btnSave">Save</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    </div>
+</div>
+<!--upload hinh anh su dung ajax jquery-->
+<script>
+   $(function () {
+      //Dang ky su kien click cua nut btnUpload
+      $('#btnUpload').click(function () {
+          $('#fileUpload').trigger('click');
+      });
+      //bat su kien change data tren fileUpload
+      $('#fileUpload').change(function () {
+      //kiem tra trinh duyet co ho tro formdata object khong?
+         if(window.FormData!==undefined)
+                {
+                    //lay du lieu tren fileUpload
+                    var fileUpload = $('#fileUpload').get(0);
+                    var files = fileUpload.files;
+                    //tao doi tuong formdata
+                    var formData = new FormData();
+                    //dua du lieu vao form
+                    formData.append('file', files[0]);
+                    //post du lieu len server
+                    $.ajax(
+                        {
+                            type: 'POST',
+                            url: '/QuanLySanPham/HinhAnhUpload',
+                            contentType: false,//khong co header
+                            processData: false,//Khong xu ly du lieu
+                            data: formData,
+                            success: function (urlImage) {
+                                $('#HinhAnh1').val(urlImage);
+                                $('#imgUpload').attr({ 'src': '/Content/products-images/' + urlImage });
+                            },
+                            erro: function (err) {
+                                alert('co loi xu ly:' + err.statusText);
+                            }
+                        });
+                }
+
+            })
+        });
+</script>
+
+<script src="~/Content/ckeditor/ckeditor.js"></script>
+<script type="text/javascript">
+     //CKEDITOR.replace('ckeditor');
+    $(function () {
+        var editor = CKEDITOR.replace('txtmota', {
+            language: 'vi',
+            customConfig: '/Content/ckeditor/config.js',
+        });
+    })
+</script>
+

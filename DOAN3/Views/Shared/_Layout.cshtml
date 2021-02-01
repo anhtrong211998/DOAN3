@@ -1,0 +1,171 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <!--[if IE]>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicons Icon -->
+    <link rel="icon" href="http://demo.magikthemes.com/skin/frontend/base/default/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="http://demo.magikthemes.com/skin/frontend/base/default/favicon.ico" type="image/x-icon" />
+    <!-- Mobile Specific -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- CSS Style -->
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    <!-- Google Fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,500,700' rel='stylesheet' type='text/css'>
+    <link href="~/Content/css/font-awesome.css" rel="stylesheet" />
+    
+</head>
+<body class="cms-index-index">
+    <div class="page">
+        <!-- Header -->
+        @Html.Partial("~/Views/Shared/_HeaderPartialView.cshtml")
+        <!-- end header -->
+        <!-- Navbar -->
+        @Html.Partial("~/Views/Shared/_MenuPartialView.cshtml")
+        <!-- end nav -->
+        <!-- Slider -->
+        @Html.Partial("~/Views/Shared/_SliderPartialView.cshtml")
+        <!-- end Slider -->
+        <!-- header service -->
+        <div class="header-service">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-sm-6 col-xs-12" style="margin-left: 7%">
+                        <div class="content">
+                            <div class="icon-truck">&nbsp;</div>
+                            <span><strong>GIAO HÀNG MIỄN PHÍ</strong> CHO ĐƠN HÀNG TRÊN 150.000 VNĐ</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 col-xs-12">
+                        <div class="content">
+                            <div class="icon-support">&nbsp;</div>
+                            <span><strong>HỖ TRỢ KHÁCH HÀNG</strong> DỊCH VỤ</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 col-xs-12">
+                        <div class="content">
+                            <div class="icon-money">&nbsp;</div>
+                            <span><strong>TIỀN TRONG 3 NGÀY</strong> ĐẢM BẢO HOÀN</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end header service -->
+        <!-- main container -->
+        @Html.Partial("~/Views/Shared/SanPhamMoi.cshtml")
+        <!-- End main container -->
+        <!-- recommend slider -->
+        @RenderBody()
+        <!-- End Recommend slider -->
+        <!-- banner section -->
+        @Html.Partial("~/Views/Shared/_BannerPartialView.cshtml")
+        <!-- End banner section -->
+        @Html.Partial("~/Views/Shared/SanPhamGiamGia.cshtml")
+        <!-- End Featured Slider -->
+        <!-- Footer -->
+        @Html.Partial("~/Views/Shared/_FooterPartialView.cshtml")
+        <!-- End Footer -->
+    </div>
+    @Scripts.Render("~/Content/js")
+    <script type='text/javascript'>
+        jQuery(document).ready(function(){
+            jQuery('#rev_slider_4').show().revolution({
+                dottedOverlay: 'none',
+                delay: 5000,
+                startwidth: 1170,
+                startheight: 580,
+
+                hideThumbs: 200,
+                thumbWidth: 200,
+                thumbHeight: 50,
+                thumbAmount: 2,
+
+                navigationType: 'thumb',
+                navigationArrows: 'solo',
+                navigationStyle: 'round',
+
+                touchenabled: 'on',
+                onHoverStop: 'on',
+
+                swipe_velocity: 0.7,
+                swipe_min_touches: 1,
+                swipe_max_touches: 1,
+                drag_block_vertical: false,
+
+                spinner: 'spinner0',
+                keyboardNavigation: 'off',
+
+                navigationHAlign: 'center',
+                navigationVAlign: 'bottom',
+                navigationHOffset: 0,
+                navigationVOffset: 20,
+
+                soloArrowLeftHalign: 'left',
+                soloArrowLeftValign: 'center',
+                soloArrowLeftHOffset: 20,
+                soloArrowLeftVOffset: 0,
+
+                soloArrowRightHalign: 'right',
+                soloArrowRightValign: 'center',
+                soloArrowRightHOffset: 20,
+                soloArrowRightVOffset: 0,
+
+                shadow: 0,
+                fullWidth: 'on',
+                fullScreen: 'off',
+
+                stopLoop: 'off',
+                stopAfterLoops: -1,
+                stopAtSlide: -1,
+
+                shuffle: 'off',
+
+                autoHeight: 'off',
+                forceFullWidth: 'on',
+                fullScreenAlignForce: 'off',
+                minFullScreenHeight: 0,
+                hideNavDelayOnMobile: 1500,
+
+                hideThumbsOnMobile: 'off',
+                hideBulletsOnMobile: 'off',
+                hideArrowsOnMobile: 'off',
+                hideThumbsUnderResolution: 0,
+
+                hideSliderAtLimit: 0,
+                hideCaptionAtLimit: 0,
+                hideAllCaptionAtLilmit: 0,
+                startWithSlide: 0,
+                fullScreenOffsetContainer: ''
+                });
+                });
+    </script>
+    <script src="~/Scripts/AjaxJson/GioHangAjax.js"></script>
+    <script>
+        function XoaGioHang(masp) {
+            event.defaultPrevented;
+        $.ajax({
+            url: '/Giohang/XoaGioHang',
+            type:'POST',
+            datatype:'json',
+            data: {
+                masp: masp
+            },
+            success: function (response) {
+                $('#xoa_' + masp).remove();
+                $('#cart-total').html(response.soluong);
+                $('#totalprice').html(response.tongtien);
+            }
+        });
+    }
+    </script>
+</body>
+<!-- Mirrored from htmldemo.magikcommerce.com/ecommerce/inspire-html-template/digital/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 13 Aug 2015 08:04:54 GMT -->
+</html>

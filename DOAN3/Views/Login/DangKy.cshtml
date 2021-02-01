@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewBag.Title = "DangKy";
+    Layout = "~/Views/Shared/Layout2.cshtml";
+}
+
+    <form action="/Login/DangKy" method="post" style="width:800px;margin-left:230px;">
+    <p>Vui lòng điền thông tin của bạn.</p>
+    <ul class="form-list">
+        <li>
+            <label for="region_id">Email</label>
+            <input type="text" class="input-text required-entry" title="State/Province" value="" name="email" id="inputemail">
+        </li>
+        <li>
+            <label class="required" for="country">Mật Khẩu</label>
+            <input type="password" class="input-text required-entry" title="State/Province" value="" name="matkhau" id="inputname">
+        </li>
+        <li>
+            <label class="required" for="country">Họ và Tên</label>
+            <input type="text" class="input-text required-entry" title="State/Province" value="" name="hoten" id="inputname">
+        </li>
+        
+        <li>
+            <label for="inputaddress">Địa chỉ</label>
+            <textarea class="input-text required-entry form-control" title="State/Province" value="" name="diachi" id="inputaddress"></textarea>
+        </li>
+        <li>
+            <label for="region_id">Số điện thoại</label>
+            <input type="text" class="input-text required-entry" title="State/Province" value="" name="sodienthoai" id="inputphone">
+        </li>
+    </ul>
+    <!--buttons-set11-->
+    <button class="button btn-checkout" title="Proceed to Checkout" type="submit" style="float: left;"><span>Đặt hàng</span></button>
+</form>
+
+
+

@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewBag.Title = "DanhSachHDChuaXacNhan";
+    Layout = "~/Views/Shared/Layout2.cshtml";
+}
+
+<script src="~/Scripts/plugins/jquery.twbsPagination.min.js"></script>
+<script src="~/Scripts/AjaxJson/QuanLyDonHangController.js"></script>
+<section id="main-content">
+    <section class="wrapper">
+        <div class="dulieu">
+            <div class="dl_motkhoi">
+                <div class="dl_trai">
+                    <h3 class="solieu" id="slsp"></h3>
+                    <span>đơn hàng</span>
+                </div>
+                <div class="dl_phai">
+                    <i class="fa fa-eye"> </i>
+                </div>
+                <div class="clearfix"> </div>
+            </div>
+        </div>
+        <div class="card_layer">
+            <h5>Danh sách hóa đơn bán</h5>
+            <div class="row">
+                <div class="col-md-12">
+                    <button id="btnAddNew" class="btn btn-success pull-right">Thêm</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <td>Mã hóa đơn</td>
+                                <td>Ngày đặt</td>
+                                <td>Tình trạng giao hàng</td>
+                                <td>Ngày giao</td>
+                                <td>Đã thanh toán</td>
+                                <td>Mã khách hàng</td>
+                                
+                                <td>Mã nhân viên</td>
+                                <td>Ưu đãi</td>
+                                <td>Thành tiền</td>
+                                <td>Chức năng</td>
+                            </tr>
+                        </thead>
+                        <tbody id="tblData"></tbody>
+                    </table>
+                    <div id="pagination" class="pagination">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>
+@Html.Partial("~/Areas/Admin/Views/QuanLyDonDatHang/View.cshtml");
+

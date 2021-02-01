@@ -1,0 +1,88 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Đổi mật khẩu</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+   @Styles.Render("~/Content/login")
+<script src="~/Content/js/jquery.min.js"></script>
+<script src="~/Content/js/bootstrap.min.js"></script>
+    <script>
+		window.onload = function () {
+			document.getElementById("password1").onchange = validatePassword;
+			document.getElementById("password2").onchange = validatePassword;
+		}
+
+		function validatePassword() {
+			var pass2 = document.getElementById("password2").value;
+			var pass1 = document.getElementById("password1").value;
+			if (pass1 != pass2)
+				document.getElementById("password2").setCustomValidity("Passwords Don't Match");
+			else
+				document.getElementById("password2").setCustomValidity('');
+			//empty string means no validation error
+		}
+    </script>
+</head>
+<body>
+    <div class="logmain">
+        <div class="sublog">
+            <!-- title -->
+            <div class="toplog">
+                <h2><a href=""><span>I</span>nspire</a></h2>
+            </div>
+            <!-- end title -->
+            <div class="mainlog">
+                <div class="toptitle">
+                    <p class="title">Đổi mật khẩu<span class="icon-hand-down"></span></p>
+                </div>
+                <div class="clform">
+                    <div class="input">
+                        <input type="password" placeholder="Mật khẩu" name="password" id="password1" required="" oninput="this.setCustomValidity('')" oninvalid="this.setCustomValidity('Please enter a password!')" />
+                        <span class="icon-unlock-alt"></span>
+                    </div>
+                    <div class="input">
+                        <input type="password" placeholder="Nhập lại mật khẩu" name="Confirm Password" id="password2" required="" />
+                        <span class="icon-unlock-alt"></span>
+                    </div>
+                    <div class="inputf">
+                    </div>
+                    <button type="submit" class="btn-submit" id="btnDangky">Xác nhận</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+    $(function () {
+        $('#btnDangky').click(function () {
+            var password = $('#password1').val();
+            $.ajax({
+                url: '/Admin/LoginAdmin/DoiMatKhau',
+                type: 'Post',
+                dataType: 'Json',
+                data: {
+                    Password: password
+                },
+                success: function (response) {
+                    if (response.success) {
+                        window.location = '/Admin/LoginAdmin/Dangnhap';
+                    }
+                    else {
+                        alert("Dang ky khong thanh cong");
+                    }
+                },
+                Error: function (err) {
+                    alert("That bai");
+                }
+            });
+
+        });
+    });
+    </script>
+</body>
+</html>

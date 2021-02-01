@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewBag.Title = "DanhSachPhieuNhap";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<link href="~/Areas/Admin/Admincss/jquery-ui.css" rel="stylesheet" />
+<script src="~/Content/js/jquery-ui.js"></script>
+<script>
+        $(function () {
+            $('#txtngaycapnhat').datepicker()
+        });
+</script>
+<script src="~/Scripts/plugins/jquery.twbsPagination.min.js"></script>
+<script src="~/Scripts/AjaxJson/QuanLyPhieuNhapajax.js"></script>
+<section id="main-content">
+    <section class="wrapper">
+        <div class="dulieu">
+            <div class="dl_motkhoi">
+                <div class="dl_trai">
+                    <h3 class="solieu" id="slsp"></h3>
+                    <span>Nhà sản xuất</span>
+                </div>
+                <div class="dl_phai">
+                    <i class="fa fa-eye"> </i>
+                </div>
+                <div class="clearfix"> </div>
+            </div>
+        </div>
+        <div class="card_layer">
+            <h5>Danh sách nhà sản xuất</h5>
+            <div class="row">
+                <div class="col-md-12">
+                    <button id="btnAddNew" class="btn btn-success pull-right">Thêm</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <td>Mã phiếu nhập</td>
+                                <td>Mã nhà cung cấp</td>
+                                <td>Ngày nhập</td>
+                                <td>Thành tiền</td>
+                                <td>Chức năng</td>
+                            </tr>
+                        </thead>
+                        <tbody id="tblData"></tbody>
+                    </table>
+                    <div id="pagination" class="pagination">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>
+@Html.Partial("~/Areas/Admin/Views/QuanLyPhieuNhap/PhieuNhapModalPartialView.cshtml");

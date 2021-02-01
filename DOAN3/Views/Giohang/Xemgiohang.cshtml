@@ -1,0 +1,151 @@
+﻿@using DOAN3.Models.Entities;
+@model IEnumerable<itemGioHang>
+@{
+    ViewBag.Title = "Giỏ hàng";
+    Layout = "~/Views/Shared/Layout2.cshtml";
+}
+
+<section class="main-container col1-layout">
+    <div class="main container">
+        <div class="col-main">
+            <div class="cart wow">
+                @if (Model == null)
+                {
+                    <div class="page-title">
+                        <h2>Giỏ hàng của bạn trống</h2>
+                    </div>
+                }
+                else
+                {
+                    <div class="page-title">
+                        <h2>Giỏ hàng của bạn</h2>
+                    </div>
+                    <div class="table-responsive">
+                        <form method="post" action="#updatePost/">
+                            <input type="hidden" value="Vwww7itR3zQFe86m" name="form_key">
+                            <fieldset>
+                                <table class="data-table cart-table" id="shopping-cart-table">
+                                    <colgroup>
+                                        <col width="1">
+                                        <col>
+                                        <col width="1">
+                                        <col width="1">
+                                        <col width="1">
+                                        <col width="1">
+                                        <col width="1">
+                                    </colgroup>
+                                    <thead>
+                                        <tr class="first last">
+                                            <th rowspan="1">&nbsp;</th>
+                                            <th rowspan="1"><span class="nobr">Tên sản phẩm</span></th>
+                                            <th rowspan="1"></th>
+                                            <th rowspan="1" class="a-center">Giá</th>
+                                            <th class="a-center" rowspan="1">Số lượng</th>
+                                            <th rowspan="1" class="a-center">Tổng</th>
+                                            <th class="a-center" rowspan="1">&nbsp;</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr class="first last">
+                                            <td class="a-right last" colspan="50">
+                                                <div class="col-sm-4"><button class="button btn-continue" title="Continue Shopping" type="button"><a href="/Home/Index"><span>Tiếp tục mua sắm</span></a></button></div>
+                                                <div class="col-sm-4">
+                                                    <div class="discount">
+                                                        <form method="post" action="#couponPost/" id="discount-coupon-form">
+                                                            <input type="text" value="" name="coupon_code" id="coupon_code" class="input-text fullwidth" placeholder="Mã giảm giá(nếu có)">
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                <div class="totals col-sm-4">
+                                                    <table class="table shopping-cart-table-total" id="shopping-cart-totals-table">
+                                                        <colgroup>
+                                                            <col>
+                                                            <col width="1">
+                                                        </colgroup>
+                                                        <tfoot>
+                                                            <tr>
+                                                                <td colspan="1" class="a-left" style=""><strong>Thành tiền</strong></td>
+                                                                <td class="a-right" style=""><strong><span class="price" id="totalprice">@ViewBag.tongtien VNĐ</span></strong></td>
+                                                            </tr>
+                                                        </tfoot>
+                                                    </table>
+                                                    <button class="button btn-checkout" title="Proceed to Checkout" type="button" style="float: right;"><a href="/Muahang/Muahang">Thanh toán</a></button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                        {
+                                            int thanhtien = item.SoLuong * item.DonGia;
+                                            <tr class="first odd" id="xoa_@item.MaSP">
+                                                <td class="image" >
+                                                    <a class="product-image" title="Sample Product" href="#/women-s-crepe-printed-black/">
+                                                        <img width="75" alt="Sample Product" src="~/Content/products-images/@item.HinhAnh">
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <h2 class="product-name">
+                                                        <a href="#/women-s-crepe-printed-black/">@item.TenSP.Substring(0,20)</a>
+                                                    </h2>
+                                                </td>
+                                                <td class="a-center">
+                                                    <a title="Edit item parameters" class="edit-bnt" href="#configure/id/15945/"></a>
+                                                </td>
+                                                <td class="a-right">
+                                                    <span class="cart-price">
+                                                        <span class="price">@item.DonGia.ToString("#,##")</span>
+                                                    </span>
+                                                </td>
+                                                <td class="a-center movewishlist">
+                                                    <input maxlength="12" class="input-text qty" title="Qty" size="4" value="@item.SoLuong" name="cart[15946][qty]" type="number" id="soluong_@item.MaSP" onchange="SoLuongChange('@item.MaSP','@item.DonGia')">
+                                                </td>
+                                                <td class="a-right movewishlist">
+                                                    <span class="cart-price">
+                                                        <span class="price" id="thanhtien_@item.MaSP">@thanhtien</span>
+                                                    </span>
+                                                </td>
+                                                <td class="a-center last">
+                                                    <a class="button remove-item" title="Remove item" href="#" onclick="XoaGioHang('@item.MaSP')">
+                                                        <span>
+                                                            <span>Remove item</span>
+                                                        </span>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        }
+                                        
+                                    </tbody>
+                                </table>
+                            </fieldset>
+                        </form>
+                    </div>
+                }
+                
+                <!--cart-collaterals-->
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    function SoLuongChange(masp, dg) {
+        //L?y s? lu?ng trong textbox
+        var sl = parseInt($("#soluong_" + masp).val());
+        var thanhtien = sl * dg
+        $("#thanhtien_" + masp).html(thanhtien.toString() + "VNĐ");
+        $.ajax({
+            url: '@Url.Action("SuaGioHang", "Giohang")',
+            type: 'Post',
+            datatype: 'JSon',
+            data: { masp: masp, sl: sl },
+            success: function (data) {
+                $("#totalprice").html(data.tongtien);
+
+            },
+            error: function (data) {
+                alert('Không sua duoc')
+            }
+        });
+    }
+</script>
+

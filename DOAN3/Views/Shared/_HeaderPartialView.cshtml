@@ -1,0 +1,46 @@
+﻿@using DOAN3.Models.Entities;
+<header class="header-container">
+    <div class="header-top">
+        <div class="container">
+            <div class="row">
+                <marquee behavior="" direction="" style="color: white;font-size: 16px;padding: 3px 0 0 0;">
+                    Inspire nơi cung cấp sản phẩm chính hãng
+                </marquee>
+            </div>
+        </div>
+    </div>
+    <div class="header container">
+        <div class="row">
+            <div class="col-lg-2 col-sm-3 col-md-2 col-xs-12">
+                <!-- Header Logo -->
+                <a class="logo" title="Magento Commerce" href="@Url.Action("Index","Home")"><img alt="Magento Commerce" src="~/Content/images/logo.png"></a>
+                <!-- End Header Logo -->
+            </div>
+            <div class="col-lg-7 col-sm-4 col-md-6 col-xs-12">
+                <!-- Search-col -->
+                <div class="search-box">
+                    <form action="/XemSanpham/KetQuaTimKiem" method="POST" id="search_mini_form" name="Categories">
+
+                        <input type="text" placeholder="Search here..." value="" maxlength="70" class="" name="search" id="search">
+                        <button id="submit-button" class="search-btn-bg" type="submit"><span>Tìm kiếm</span></button>
+                    </form>
+                </div>
+                <!-- End Search-col -->
+            </div>
+            <!-- Top Cart -->
+            <div class="col-lg-3 col-sm-5 col-md-4 col-xs-12">
+                @{ ThanhVien tk = (ThanhVien)Session["UserThanhVien"];}
+                @if (tk != null)
+                {
+                    <div class="signup"><a title="Login" href="#"><span>@tk.HoTen</span></a></div>
+                }
+                else { 
+                <div class="signup"><a title="Login" href="@Url.Action("DangKy","Login")"><span>Đăng ký</span></a></div>
+                <span class="or"> | </span>
+                <div class="login"><a title="Login" href="@Url.Action("DangNhapNguoiDung","Login")"><span>Đăng nhập</span></a></div>
+                }
+            </div>
+            <!-- End Top Cart -->
+        </div>
+    </div>
+</header>

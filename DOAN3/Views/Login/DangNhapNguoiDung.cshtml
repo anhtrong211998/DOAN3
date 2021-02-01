@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewBag.Title = "DangNhapNguoiDung";
+    Layout = "~/Views/Shared/Layout2.cshtml";
+}
+
+<form action="/Login/DangNhapNguoiDung" method="post" style="width:800px;margin-left:230px;">
+    <p>Vui lòng điền thông tin của bạn.</p>
+    <ul class="form-list">
+        <li>
+            <label for="region_id">Email</label>
+            <input type="text" class="input-text required-entry" title="State/Province" value="" name="Email" id="inputemail">
+        </li>
+        <li>
+            <label class="required" for="country">Mật Khẩu</label>
+            <input type="password" class="input-text required-entry" title="State/Province" value="" name="MatKhau" id="inputname">
+        </li>
+    </ul>
+    <!--buttons-set11-->
+    <button class="button btn-checkout" title="Proceed to Checkout" type="submit" style="float: left;"><span>Đặt hàng</span></button>
+</form>
+

@@ -1,0 +1,77 @@
+﻿
+@{
+    ViewBag.Title = "DanhSachChiTietPN";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<section id="main-content">
+    <section class="wrapper">
+        @*<div class="dulieu">
+                <div class="dl_motkhoi">
+                    <div class="dl_trai">
+                        <h3 class="solieu" id="slsp"></h3>
+                        <span>sản phẩm</span>
+                    </div>
+                    <div class="dl_phai">
+                        <i class="fa fa-eye"> </i>
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+            </div>*@
+        <div class="card_layer">
+            <h5>Danh sách sản phẩm</h5>
+            <div class="row">
+                <div class="col-md-12">
+                    <button id="btnAddNew" class="btn btn-success pull-right">Thêm</button>
+                </div>
+            </div>
+            <div class="row" id="renderhere">
+                
+            </div>
+        </div>
+    </section>
+</section>
+<div id="modalADDUPDATE" class="modalthem modal">
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+    <h3>ADD/UPDATE</h3>
+    <div class="modal-body">
+        <form action="/action_page.php">
+            <div class="form-group">
+                <label for="txtmanpn">Mã hóa đơn nhập:</label>
+                <input type="text" class="form-control" id="txtmanpn">
+                <input type="hidden" class="form-control" id="hidID" value="0">
+            </div>
+            <div class="form-group">
+                <label for="txtMaNCC">Mã nhà cung cấp:</label>
+                @Html.DropDownList("MaNCC", null, new { @class = "form-control col-md-7", @id = "txtMaNCC" })
+            </div>
+            <div class="form-group">
+                <label for="txtmasp">Mã sản phẩm:</label>
+                @Html.DropDownList("MaSP", null, new { @class = "form-control col-md-7", @id = "txtmasp" })
+            </div>
+            <div class="form-group">
+                <label for="txtngaycapnhat">Ngày cập nhật:</label>
+                <input type="text" class="form-control" id="txtngaycapnhat">
+            </div>
+            <div class="form-group">
+                <label for="txtsl">Số lượng nhập :</label>
+                <input type="text" class="form-control" id="txtsl">
+            </div>
+
+            <div class="form-group">
+                <label for="txtdg">Đơn giá :</label>
+                <input type="text" class="form-control" id="txtdg">
+            </div>
+            <div class="form-group">
+                <label for="txttt">Thành tiền :</label>
+                <input type="text" class="form-control" id="txttt">
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" id="btnUpdate">Update</button>
+        <button type="submit" class="btn btn-primary" id="btnSave">Save</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    </div>
+</div>
+

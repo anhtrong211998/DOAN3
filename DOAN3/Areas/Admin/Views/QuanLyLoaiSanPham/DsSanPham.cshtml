@@ -1,0 +1,200 @@
+﻿@using DOAN3.Models.Entities;
+@using PagedList.Mvc;
+@model PagedList.PagedList<SanPham>
+@{
+    ViewBag.Title = "DsSanPham";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@*<link href="~/Areas/Admin/Admincss/jquery-ui.css" rel="stylesheet" />
+<script src="~/Content/js/jquery-ui.js"></script>
+<script>
+        $(function () {
+            $('#txtngaycapnhat').datepicker()
+        });
+</script>*@
+<section id="main-content">
+    <section class="wrapper">
+        @*<div class="dulieu">
+                <div class="dl_motkhoi">
+                    <div class="dl_trai">
+                        <h3 class="solieu" id="slsp"></h3>
+                        <span>sản phẩm</span>
+                    </div>
+                    <div class="dl_phai">
+                        <i class="fa fa-eye"> </i>
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+            </div>*@
+        <div class="card_layer">
+            <h5>Danh sách sản phẩm</h5>
+            <div class="row">
+                <div class="col-md-12">
+                    <button id="btnAddNew" class="btn btn-success pull-right">Thêm</button>
+                </div>
+            </div>
+            <div class="row" id="renderhere">
+                <div class="col-md-12">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <td>Mã sản phẩm</td>
+                                <td>Tên sản phẩm</td>
+                                @*<td>Mô tả</td>*@
+                                <td>Đơn giá</td>
+                                <td>Giảm giá</td>
+                                <td>Hình ảnh</td>
+                                <td>Số lượng tồn</td>
+                                <td>Ngày cập nhật</td>
+                                <td>Nhà cung cấp</td>
+                                <td>Nhà sản xuât</td>
+                                <td>Chức năng</td>
+                            </tr>
+                        </thead>
+                        <tbody id="tblData">
+                            @if (Model != null)
+                            {
+                                foreach (SanPham sp in Model)
+                                {
+                                    <tr id="@sp.MaSP">
+                                        <td>@sp.MaSP </td>
+                                        <td>@sp.TenSP</td>
+                                        @*<td>@Html.Raw(sp.MoTa)</td>*@
+                                        <td>@sp.DonGia</td>
+                                        <td>@sp.GiamGia %</td>
+                                        <td><img class="img-product" src="~/Content/products-images/@sp.HinhAnh" /></td>
+                                        <td>@sp.SoLuongTon</td>
+                                        <td>@sp.NgayCapNhat</td>
+                                        @if (sp.MaNCC != "")
+                                        {
+                                            <td>@sp.MaNCC</td>
+                                        }
+                                        else
+                                        {
+                                            <td>NULL</td>
+                                        }
+                                        <td>@sp.MaNSX</td>
+                                        <td id="chucnang">
+                                            <button class="btn btn-primary btn-edit" data-id="@sp.MaSP"><span class="icon-edit"></span></button>
+                                            <button class="btn btn-danger btn-delete" data-id="@sp.MaSP"><span class="icon-remove"></span></button>
+                                        </td>
+                                    </tr>
+                                }
+
+                            }
+                        </tbody>
+                    </table>
+                    @Html.PagedListPager(Model, page => Url.Action("DsSanPham","QuanLyLoaiSanPham", new { page }))
+                </div>
+            </div>
+        </div>
+    </section>
+</section>
+@*<div id="modalADDUPDATE" class="modalthem modal">
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+    <h3>ADD/UPDATE</h3>
+    <div class="modal-body">
+        <form>
+            <div class="form-group">
+                <label for="txtmasp">Mã sản phẩm:</label>
+                <input type="text" class="form-control" id="txtmasp">
+                <input type="hidden" class="form-control" id="hidID" value="0">
+            </div>
+            <div class="form-group">
+                <label for="txttensp">Tên sản phẩm:</label>
+                <input type="text" class="form-control" id="txttensp">
+            </div>
+            <div class="form-group">
+                <label for="txtmota">Mô tả:</label>
+                <input type="text" class="form-control" id="txtmota">
+            </div>
+            <div class="form-group">
+                <label for="txtdongia">Đơn giá:</label>
+                <input type="text" class="form-control" id="txtdongia">
+            </div>
+            <div class="form-group">
+                <label for="txtgiamgia">Giảm giá:</label>
+                <input type="text" class="form-control" id="txtgiamgia">
+            </div>
+            <div class="form-group">
+                <label for="txtavarta">Hình ảnh</label>
+                <div id="txtavarta">
+                    <input type="text" name="HinhAnh" id="HinhAnh1" class="form-control" style="display:inline-block;" />
+                    <input type="file" name="fileUpload" id="fileUpload" style="display:none;" />
+                    <input type="button" id="btnUpload" value="..." style="background-color:green;width:35px;height:35px;border-radius:7px;" />
+                    <img id="imgUpload" width="300" style="margin-top:1rem;margin-bottom:1rem;" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="txtsoluong">Số lượng tồn:</label>
+                <input type="text" class="form-control" id="txtsoluong">
+            </div>
+            <div class="form-group">
+                <label for="txtngaycapnhat">Ngày cập nhật:</label>
+                <input type="text" class="form-control" id="txtngaycapnhat">
+            </div>
+            <div class="form-group">
+                <label for="txtMaNCC">Nhà cung cấp:</label>
+                
+                @Html.DropDownList("MaNCC", null, new { @class = "form-control col-md-3", @id = "txtMaNCC" })
+            </div>
+            <div class="form-group">
+                <label for="txtMaNSX">Nhà sản xuât:</label>
+              
+                @Html.DropDownList("MaNSX", null, new { @class = "form-control col-md-7", @id = "txtMaNSX" })
+            </div>
+            <div class="form-group">
+                <label for="txtMaLoaiSP">Mã loại sản phẩm:</label>
+                <input type="text" class="form-control" id="txtsdt">
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" id="btnSave">Save</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    </div>
+</div>*@
+<!--upload hinh anh su dung ajax jquery-->
+@*<script>
+   $(function () {
+      $('#btnUpload').click(function () {
+          $('#fileUpload').trigger('click');
+      });
+      $('#fileUpload').change(function () {
+          if (window.FormData !== undefined) {
+              var fileUpload = $('#fileUpload').get(0);
+              var files = fileUpload.files;
+              var formData = new FormData();
+              formData.append('file', files[0]);
+              $.ajax(
+                  {
+                      type: 'POST',
+                      url: '/QuanLySanPham/HinhAnhUpload',
+                      contentType: false,
+                      processData: false,
+                      data: formData,
+                      success: function (urlImage) {
+                          $('#HinhAnh1').val(urlImage);
+                          $('#imgUpload').attr({ 'src': '/Content/products-images/' + urlImage });
+                      },
+                      erro: function (err) {
+                          alert('co loi xu ly:' + err.statusText);
+                      }
+                  });
+          };
+      });
+
+   });
+</script>*@
+
+@*<script src="~/Content/ckeditor/ckeditor.js"></script>
+<script type="text/javascript">
+    $(function () {
+        var editor = CKEDITOR.replace('txtmota', {
+            language: 'vi',
+            customConfig: '/Content/ckeditor/config.js',
+        });
+    })
+</script>*@
+

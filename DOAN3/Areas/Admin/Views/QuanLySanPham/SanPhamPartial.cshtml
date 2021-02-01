@@ -1,0 +1,71 @@
+﻿@using DOAN3.Models.Entities;
+@using PagedList.Mvc;
+@model PagedList.PagedList<SanPham>
+<div class="col-md-12">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <td>Mã sản phẩm</td>
+                <td>Tên sản phẩm</td>
+                @*<td>Mô tả</td>*@
+                <td>Đơn giá</td>
+                <td>Giảm giá</td>
+                <td>Hình ảnh</td>
+                <td>Số lượng tồn</td>
+                <td>Ngày cập nhật</td>
+                <td>Nhà cung cấp</td>
+                <td>Nhà sản xuât</td>
+                <td>Chức năng</td>
+            </tr>
+        </thead>
+        <tbody id="tblData">
+            @if (Model != null)
+            {
+                foreach (SanPham sp in Model)
+                {                  
+                    <tr id="@sp.MaSP">
+                        <td>@sp.MaSP </td>
+                        <td>@sp.TenSP</td>
+                        <td>@Html.Raw(sp.MoTa)</td>
+                        <td>@sp.DonGia</td>
+                        <td>@sp.GiamGia %</td>
+                        <td><img class="img-product" src="~/Content/products-images/@sp.HinhAnh" /></td>
+                        <td>@sp.SoLuongTon</td>
+                        <td>@sp.NgayCapNhat</td>
+                        @if (sp.MaNCC != "")
+                        {
+                            <td>@sp.MaNCC</td>
+                        }
+                        else
+                        {
+                            <td>NULL</td>
+                        }
+                        <td>@sp.MaNSX</td>
+                        <td id="chucnang">
+                            <button class="btn btn-primary btn-edit" data-id="@sp.MaSP"><span class="icon-edit"></span></button>
+                            <button class="btn btn-danger btn-delete" data-id="@sp.MaSP"><span class="icon-remove"></span></button>
+                        </td>
+                    </tr>
+                }
+
+            }
+        </tbody>
+    </table>
+    <div class="pageIndexs">
+        <ul class="pagination">
+            <li data-id="prev" class="prev"><a href="#"><</a></li>
+            @for (int i = 1; i <= Model.PageCount; i++)
+            {
+                if (i == Model.PageNumber)
+                {
+                    <li class="pageIndex active" data-id="@i"><a href="#">@i</a></li>
+                }
+                else
+                {
+                    <li data-id="@i" class="pageIndex"><a href="#">@i</a></li>
+                }
+            }
+            <li data-id="next" class="next"><a href="#">></a></li>
+        </ul>
+    </div>
+</div>
